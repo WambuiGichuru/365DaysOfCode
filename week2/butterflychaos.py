@@ -8,7 +8,7 @@ import numpy as np
 
 # class
 class Attractor:
-    def __init__(self, x, y, z):
+    def __init__(self, x=1, y=1, z=1):
         self.x = x
         self.y = y
         self.z = z
@@ -45,13 +45,18 @@ lc.set_linewidth(2)
 
 fig, ax= plt.subplots(figsize =(16,9))
 ax.plot(x,z, lw=0.4, color='lightseagreen')
+ax.add_collection(lc)
 ax.spines[['right','top','bottom','left']].set_visible(False)
 ax.set_xticks([])
 ax.set_yticks([])
 ax.set_facecolor('black')
+
+#defining font
+font_prop = FontProperties(family='serif', style='italic', weight='bold', size=15)
+
 ax.text(-21, 2, 'Lorenz Attractor', fontproperties=font_prop, fontsize=25)
 plt.tight_layout()
-plt.savefig("Lorenztrial2.png")
+plt.savefig("Lorenztrial.png")
 plt.show()
 
 import plotly.graph_objects as go

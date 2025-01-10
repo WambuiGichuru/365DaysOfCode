@@ -23,7 +23,7 @@ class Attractor:
 
         self.x += dx * dt
         self.y += dy * dt
-        self.z = dz * dt
+        self.z += dz * dt
 
 butterfly = Attractor(1,1,1)
 N = 15000
@@ -49,6 +49,64 @@ ax.spines[['right','top','bottom','left']].set_visible(False)
 ax.set_xticks([])
 ax.set_yticks([])
 ax.set_facecolor('black')
-#ax.text(-21, 2, 'Lorenz Attractor', fontproperties=font_prop, fontsize=25)
-ax.patch.set_alpha(0.7)
-plt.savefig("Lorenztrial1.png")
+ax.text(-21, 2, 'Lorenz Attractor', fontproperties=font_prop, fontsize=25)
+plt.tight_layout()
+plt.savefig("Lorenztrial2.png")
+plt.show()
+
+import plotly.graph_objects as go
+import plotly.io as pio
+
+plotly_template = pio.templates['plotly_dark']
+fig = go.Figure(data = [go.Scatter3d(x=x,y=y,z=z, mode='lines',line=dict(width=1.8, colors=z, colorscale='Plotly3',showscale=False))],
+                frames = [go.Frame(data = [go.scatter3d(x=x[:k],y=y[:k], z=z[:k], mode='lines')]) for k in range(1,len(x),10)])
+fig.update_layout(
+    scene=dict(
+        xaxis=dict(
+            backgroundcolor='rgb(20,20,20)',
+            showgrid=False,
+            zerolinecolor='rgb(50,50,50)'
+        ),
+        yaxis=dict(
+            backgroundcolor='rgb(20,20,20)',
+            showgrid=False,
+            zerolinecolor='rgb(50,50,50)'
+        ),
+        zaxis=dict(
+            backgroundcolor='rgb(20,20,20)',
+            showgrid=False,
+            zerolinecolor='rgb(50,50,50)'
+        )
+    ),
+    paper_bgcolor='rgb(20,20,20)',
+    font=dict(color='black'),
+    updatemenus=[
+        dict(
+            type='buttons',
+            showactive=False,
+            buttons=[
+                dict(
+                    label='Play',
+                    method='animate',
+                    args=[
+                        None,
+                        {
+                            'frame': {'duration': 2, 'redraw': True},
+                            'fromcurrent': True,
+                            'mode': 'immediate'
+                        }
+                    ]
+                )
+            ],
+            direction='left',
+            pad=dict(r=10, t=87),
+            x=0.1,
+            xanchor='right',
+            yanchor='top',
+            bgcolor='white',
+            font=dict(color='white')
+        )
+    ]
+)
+
+fig.write_html("Lorenz1_animation.html")

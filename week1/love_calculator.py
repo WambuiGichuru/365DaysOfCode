@@ -27,4 +27,4 @@ elif score > "40" or score < "50":
     print(f"Your score is {score}%, you are alright together.")
 else:
     print(f"Your score is {score}")
-    
+
